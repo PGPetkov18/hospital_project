@@ -41,4 +41,8 @@ public class TreatmentService {
                 treatment.getName(),
                 treatment.getId());
     }
+
+    public void deleteByDoctorId(String id) {
+        treatmentRepository.deleteByDoctorId(id);
+    }
 }

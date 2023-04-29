@@ -56,4 +56,8 @@ public class VisitService {
     public List<Visit> findAllNotApprovedByHospitalId(String id){
        return findAllByHospitalId(id).stream().filter(visit -> !visit.getApproved()).collect(Collectors.toList());
     }
+
+    public void deleteByDoctorId(String id) {
+        visitRepository.deleteByDoctorId(id);
+    }
 }

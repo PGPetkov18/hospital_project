@@ -23,6 +23,8 @@ public class DoctorMenuController {
     private UserService userService;
     private NavbarService navbarService;
     private DischargeSummaryService dischargeSummaryService;
+    private TreatmentService treatmentService;
+    private VisitService visitService;
 
     @GetMapping
     public ModelAndView getDoctorsMenu(HttpServletRequest request){
@@ -69,6 +71,8 @@ public class DoctorMenuController {
                 String hospitalId= session.getUser().getHospital().getId();
                 if( doctorService.checkDoctorByIdAndHospitalId(id,hospitalId)){
                     dischargeSummaryService.deleteByDoctorId(id);
+                    treatmentService.deleteByDoctorId(id);
+                    visitService.deleteByDoctorId(id);
                     doctorService.deleteById(id);
                     return new ModelAndView("redirect:/doctorsMenu");
                 }

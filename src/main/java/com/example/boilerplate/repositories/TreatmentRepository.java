@@ -20,4 +20,7 @@ public interface TreatmentRepository extends JpaRepository<Treatment, String> {
             "Name=:name WHERE Id=:id",
             nativeQuery = true)
     void update(String description, LocalDateTime dateOfTreatment, String name, String id);
+@Modifying
+@Transactional
+    void deleteByDoctorId(String id);
 }

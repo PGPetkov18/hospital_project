@@ -42,6 +42,8 @@ public interface VisitRepository extends JpaRepository<Visit, String> {
             "ON u.Id = p.UserId   " +
             "WHERE u.HospitalId=:id ",nativeQuery = true)
  List<Visit> findAllByHospitalId(String id);
-
+@Modifying
+@Transactional
+    void deleteByDoctorId(String id);
 }
 
