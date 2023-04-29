@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.util.Set;
 import java.util.UUID;
 @EqualsAndHashCode
 @AllArgsConstructor
@@ -19,7 +20,6 @@ public class Doctor {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UserId")
     private User user;
-
     public Doctor(){
 
         this.id= UUID.randomUUID().toString();
@@ -53,4 +53,9 @@ public class Doctor {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }

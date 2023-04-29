@@ -3,8 +3,10 @@ package com.example.boilerplate.repositories;
 import com.example.boilerplate.models.DischargeSummary;
 import com.example.boilerplate.models.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,4 +25,8 @@ public interface DischargeSummaryRepository extends JpaRepository<DischargeSumma
     List<DischargeSummary> findAllByHospitalId(@Param("id") String id);
 
     List<DischargeSummary> findByPatientId(String id);
+
+    @Modifying
+    @Transactional
+    void deleteByDoctorId(String id);
 }

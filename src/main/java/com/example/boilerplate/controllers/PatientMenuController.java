@@ -133,7 +133,7 @@ public class PatientMenuController {
                 String hospitalId= session.getUser().getHospital().getId();
                 if( patientService.checkPatientByIdAndHospitalId(id,hospitalId)){
                     patientService.deleteById(id);
-                    return new ModelAndView("redirect:/patientMenu");
+                    return new ModelAndView("redirect:/patientsMenu");
                 }
             }
         }

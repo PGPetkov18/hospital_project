@@ -22,6 +22,7 @@ public class DoctorMenuController {
     private RoleService roleService;
     private UserService userService;
     private NavbarService navbarService;
+    private DischargeSummaryService dischargeSummaryService;
 
     @GetMapping
     public ModelAndView getDoctorsMenu(HttpServletRequest request){
@@ -67,6 +68,7 @@ public class DoctorMenuController {
             if (role.equals("admin")) {
                 String hospitalId= session.getUser().getHospital().getId();
                 if( doctorService.checkDoctorByIdAndHospitalId(id,hospitalId)){
+                    dischargeSummaryService.deleteByDoctorId(id);
                     doctorService.deleteById(id);
                     return new ModelAndView("redirect:/doctorsMenu");
                 }

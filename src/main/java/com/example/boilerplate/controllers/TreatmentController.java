@@ -51,18 +51,14 @@ public class TreatmentController {
     @PostMapping(value = "/{id}")
     public ModelAndView saveTreatment(@ModelAttribute Treatment treatment, HttpServletRequest request, @PathVariable String id){
         if (cookieService.isSessionPresent(request.getCookies())) {
-
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if( role.equals("doctor")){
+
                 Patient patient = patientService.findById(id);
                 treatment.setPatient(patient);
                 treatment.setDoctor(doctorService.findByUserId(session.getUser().getId()));
-
-
-                Set<Treatment> treatmentSet = patient.getTreatments();
-                treatmentSet.add(treatment);
-                patient.setTreatments(treatmentSet);
+                System.out.println(treatment);
 
                 treatmentService.saveTreatment(treatment);
                 return new ModelAndView("redirect:/treatments/"+id);
@@ -98,7 +94,8 @@ public class TreatmentController {
             if( role.equals("doctor")){
                 treatment.setDoctor(doctorService.findByUserId(session.getUser().getId()));
                 treatmentService.update(treatment);
-                return new ModelAndView("redirect:/treatments/"+treatment.getPatient().getId());
+                return new ModelAndView("redirect:/treatments/"+
+                        treatmentService.findById(treatment.getId()).getPatient().getId());
             }
         }
         throw new UserDoesNotHavePermissionException();
@@ -113,7 +110,7 @@ public class TreatmentController {
             if( role.equals("doctor")){
 
                 treatmentService.deleteById(id);
-                return new ModelAndView("redirect:/treatments/"+id);
+                return new ModelAndView("redirect:/patientsMenu/all");
             }
         }
         throw new UserDoesNotHavePermissionException();

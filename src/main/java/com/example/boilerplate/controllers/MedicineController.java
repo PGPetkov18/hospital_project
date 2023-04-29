@@ -133,7 +133,7 @@ public class MedicineController {
             if( role.equals("doctor")){
 
                 medicineService.update(medicine);
-                return new ModelAndView("redirect:/medicine/");
+                return new ModelAndView("redirect:/medicine");
             }
         }
         throw new UserDoesNotHavePermissionException();

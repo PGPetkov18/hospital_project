@@ -37,7 +37,8 @@ public class Patient {
             ,joinColumns = @JoinColumn(name = "PatientId"),
             inverseJoinColumns = @JoinColumn(name = "MedicineId"))
     private Set<Medicine> medicines;
-
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "patient")
+    private Set<Relative> relatives;
     @OneToMany(mappedBy = "patient",cascade = CascadeType.ALL)
     private Set<Treatment> treatments;
 
@@ -132,5 +133,13 @@ public class Patient {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public Set<Relative> getRelatives() {
+        return relatives;
+    }
+
+    public void setRelatives(Set<Relative> relatives) {
+        this.relatives = relatives;
     }
 }

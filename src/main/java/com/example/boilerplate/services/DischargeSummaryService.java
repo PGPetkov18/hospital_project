@@ -52,4 +52,8 @@ public List<DischargeSummary> findAllByPatientId(String id){
 
         return hashDischargeSummary.containsKey(id);
     }
+
+    public void deleteByDoctorId(String id) {
+        dischargeSummaryRepository.deleteByDoctorId(id);
+    }
 }
