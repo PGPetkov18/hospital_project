@@ -1,0 +1,84 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Hospital Website</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <button aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-bs-target="#navbarText" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="place">
+                <li class="nav-item" th:each="navElement:${navElements.elements}">
+                    <a class="nav-link active" aria-current="page" th:href="${navElement.key}"
+                       th:text="${navElement.value}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<form th:action="${'/medicine/'+id}" method="post" style="width: 40%;margin-left: 30%">
+
+    <div class="form-group" >
+        <label for="select1">Избери лекарство</label>
+
+        <select id="select1" name="id" >
+            <option th:each="medicine:${medicines}"  th:value="*{medicine.id}"
+                    th:text="*{medicine.name+' '+medicine.quantity}"></option>
+
+        </select>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success"> Добави </button>
+</form>
+<form method="get" th:action="${'/medicine'}">
+    <button type="submit" class="btn btn-danger"> Затвори </button></form>
+</div>
+
+
+<table class="table" style="width: 70%;margin-left: 15%" th:unless="${#lists.isEmpty(userMedicines)}">
+    <thead>
+    <tr>
+
+        <th scope="col">Име</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Описание</th>
+        <th scope="col">Обнови</th>
+        <th scope="col">Изтрий</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr  th:each="medicine:${userMedicines}">
+        <td th:text="${medicine.name}"></td>
+        <td th:text="${medicine.quantity}"></td>
+        <td>
+            <div style="height: 50px;overflow-y:scroll;" th:text="${medicine.description}">
+
+            </div>
+        </td>
+
+        <td>
+            <form method="get" th:action="@{/medicine/update/{id}(id=${medicine.id})}">
+                <button type="submit" class="btn btn-warning"> Обнови </button></form></td>
+        <td>
+            <form method="post" th:action="@{/medicine/patient/delete/{id}(id=${medicine.id})}">
+                <button type="submit" class="btn btn-danger"> Изтрий </button></form></td>
+
+    </tr>
+    </tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+</body>
+</html>
